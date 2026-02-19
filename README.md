@@ -18,6 +18,10 @@ Open `http://localhost:3000`, enter a `match_id`, choose your hero (optional), t
 
 If you need to find your `match_id`, use OpenDota: https://www.opendota.com/
 
+## Usage limits
+
+- The API enforces a rate limit of 5 analysis requests per hour per IP.
+
 ## Tests
 
 ```bash

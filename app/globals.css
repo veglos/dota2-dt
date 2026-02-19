@@ -124,6 +124,42 @@ textarea {
   line-height: 1.45;
 }
 
+.markdown-output,
+.metadata-output {
+  width: 100%;
+  min-height: 420px;
+  background: #0b1127;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  overflow: auto;
+}
+
+.markdown-output h1,
+.markdown-output h2,
+.markdown-output h3 {
+  margin: 0.5rem 0;
+}
+
+.markdown-output p {
+  margin: 0.45rem 0;
+}
+
+.markdown-output ul {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+  padding: 0;
+}
+
+.markdown-output code {
+  background: #121a38;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
+}
+
 .result-box {
   width: 100%;
   min-height: 420px;

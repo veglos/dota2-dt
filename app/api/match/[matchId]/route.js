@@ -1,6 +1,7 @@
 import { buildMatchMarkdown } from "../../../../lib/markdown.js";
 import { fetchMatchById, isValidMatchId } from "../../../../lib/opendota.js";
 import { requestMatchAnalysisFromOpenAI } from "../../../../lib/openai.js";
+import { consumeRateLimit } from "../../../../lib/rate-limit.js";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,16 @@ export async function GET(request, { params }) {
     return Response.json(
       { error: "match_id invalido. Debe ser numerico (8 a 20 digitos)." },
       { status: 400 }
+    );
+  }
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : "anonymous";
+  const rate = consumeRateLimit(clientIp);
+  if (!rate.allowed) {
+    return Response.json(
+      { error: "Rate limit excedido: maximo 5 consultas por hora." },
+      { status: 429, headers: { "Retry-After": String(rate.retryAfterSeconds) } }
     );
   }
 
