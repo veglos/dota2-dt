@@ -1,5 +1,5 @@
 import { buildMatchMarkdown } from "../../../../lib/markdown.js";
-import { fetchMatchById, isValidMatchId } from "../../../../lib/opendota.js";
+import { fetchItemNameByIdMap, fetchMatchById, isValidMatchId } from "../../../../lib/opendota.js";
 import { requestMatchAnalysisFromOpenAI } from "../../../../lib/openai.js";
 import { consumeRateLimit } from "../../../../lib/rate-limit.js";
 import { appendRequestLog } from "../../../../lib/request-log.js";
@@ -90,9 +90,11 @@ export async function GET(request, { params }) {
 
   try {
     const match = await fetchMatchById(matchId);
+    const itemNamesById = await fetchItemNameByIdMap();
     const markdown = buildMatchMarkdown(match, {
       selectedHeroId,
-      selectedHeroName
+      selectedHeroName,
+      itemNamesById
     });
     const llmResult = await requestMatchAnalysisFromOpenAI(markdown);
 
